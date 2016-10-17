@@ -24,7 +24,7 @@ define('NASIP', '113.98.10.136');
 define('TIME', number_format(microtime(true),3,'',''));
 define('WIFI', '1050');
 define('WIFI2', '4060');
-define('TOKEN', '123456');
+define('TOKEN', '');
 define('SECRET', 'Eshore!@#');
 
 function post_j($url, $jsonStr) {
