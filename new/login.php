@@ -24,6 +24,7 @@ define('NASIP', '113.98.10.136');
 define('TIME', number_format(microtime(true),3,'',''));
 define('WIFI', '1050');
 define('WIFI2', '4060');
+define('TOKEN', '123456');
 define('SECRET', 'Eshore!@#');
 
 function post_j($url, $jsonStr) {
@@ -43,27 +44,8 @@ function post_j($url, $jsonStr) {
     return array($httpCode, $response);
 }
 
-function challenge() {
-    $str = CLINENTIP . NASIP . MAC . TIME . SECRET;
-    $auth = strtoupper(md5($str));
-    $url = "http://enet.10000.gd.cn:10001/client/challenge";
-    $jsonStr_m = json_encode(array(
-            "username" => U,
-            "clientip" => CLINENTIP,
-            "nasip" => NASIP,
-            "mac" => MAC,
-            "iswifi" => WIFI2,
-            "timestamp" => TIME,
-            "authenticator" => $auth
-        )
-    );
-    $token = list($returnCode, $returnContent) = post_j($url, $jsonStr_m);
-    $token_obj = json_decode($token['1']);
-    return $token_obj->{'challenge'};
-}
-
-function login($token) {
-    $str = CLINENTIP . NASIP . MAC . TIME . $token . SECRET;
+function login() {
+    $str = CLINENTIP . NASIP . MAC . TIME . TOKEN . SECRET;
     $auth = strtoupper(md5($str));
 
     $url = "http://enet.10000.gd.cn:10001/client/login";
@@ -82,7 +64,7 @@ function login($token) {
     return $msg = list($returnCode, $returnContent) = post_j($url, $jsonStr_m);
 }
 
-$msg = login(challenge());
+$msg = login();
 
 if (strpos($msg[1], 'login success') !== false) {
     $log = "登录成功";
