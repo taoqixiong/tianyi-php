@@ -78,6 +78,10 @@ elseif (strpos($msg[1], 'BAS设备有一个用户正在认证过程中,PortalSer
 elseif (strpos($msg[1], 'Password Error') !== false) {
     $log = "密码错误";
 }
+elseif (strpos($msg[1], 'Product Not Ordered') !== false) {
+    $log = "没有此账号";
+}
+
 ?>
 <html>
 <head>
